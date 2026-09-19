@@ -1,0 +1,28 @@
+const { Client, GatewayIntentBits } = require('discord.js');
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
+
+client.on('ready', () => {
+  console.log(`تم تسجيل الدخول بنجاح باسم ${client.user.tag}!`);
+});
+
+client.on('messageCreate', (message) => {
+  // تجاهل الرسائل القادمة من البوتات نفسها
+  if (message.author.bot) return;
+
+  // التحقق مما إذا كانت الرسالة تحتوي على حروف عربية
+  const arabicPattern = /[\u0600-\u06FF]/;
+
+  if (arabicPattern.test(message.content)) {
+    message.reply('أهلاً بك! أنا أستطيع قراءة اللغة العربية والرد عليك.');
+  }
+});
+
+// ضع التوكن الخاص ببوتك هنا
+client.login('MTU1MDczMzI2MTkyMjEwNzQ5NA.GcLJQG.y0Cz56em4AKqoqW-vyVmtpQOKoWUkRWCqyVlTM');
